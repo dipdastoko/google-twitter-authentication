@@ -1,6 +1,9 @@
-import logo from './logo.svg';
+
 import './App.css';
 import { Button, Form } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { faGoogle, faTwitter } from '@fortawesome/free-brands-svg-icons';
 
 function App() {
   return (
@@ -28,6 +31,10 @@ function App() {
       <br />
       <h3 className='text-center'>Sign Up with</h3>
       <hr />
+      <div className='d-flex justify-content-center'>
+        <Button className='m-3'><h3><FontAwesomeIcon icon={faGoogle} /></h3></Button>
+        <Button className='m-3'><h3><FontAwesomeIcon icon={faTwitter} /></h3></Button>
+      </div>
 
 
     </div>
