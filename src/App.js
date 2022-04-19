@@ -57,7 +57,10 @@ function App() {
       :
       signInWithEmailAndPassword(auth, userEmail, userPassword)
         .then(result => {
-          setUserData(result.user);
+          let user = result.user;
+          user['displayName'] = 'ABC';
+          setUserData(user);
+
           console.log(result.user);
         })
   }
