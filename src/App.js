@@ -5,10 +5,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { useState } from 'react';
 import initializeAuthentication from './firebase/firebase.initialize';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, TwitterAuthProvider } from "firebase/auth";
 
 initializeAuthentication();
 const googleProvider = new GoogleAuthProvider();
+const twitterProvider = new TwitterAuthProvider();
 
 function App() {
   const auth = getAuth();
@@ -34,6 +35,13 @@ function App() {
         const user = result.user;
         console.log(user);
         setUserData(user);
+      })
+  };
+  const handleTwitter = () => {
+    signInWithPopup(auth, twitterProvider)
+      .then(result => {
+        setUserData(result.user);
+        console.log(result.user);
       })
   }
   const handleSignUpLogin = e => {
@@ -61,7 +69,7 @@ function App() {
   }
   return (
     <div className="mx-5 my-5">
-      {!userData.email ? <div>
+      {!userData.displayName ? <div>
         <h1>{isLogIn}</h1>
         <br />
         {/* ---------form----------- */}
@@ -93,7 +101,7 @@ function App() {
         <hr />
         <div className='d-flex justify-content-center'>
           <Button onClick={handleGoogle} className='m-3'><h3><FontAwesomeIcon icon={faGoogle} /></h3></Button>
-          <Button className='m-3'><h3><FontAwesomeIcon icon={faTwitter} /></h3></Button>
+          <Button onClick={handleTwitter} className='m-3'><h3><FontAwesomeIcon icon={faTwitter} /></h3></Button>
         </div>
 
       </div>
@@ -102,7 +110,12 @@ function App() {
         <div>
           <h2>Welcome {userData.displayName}</h2>
           <p>Your e-mail is: {userData.email}</p>
+          <img src={userData.photoURL} alt="" />
+          <br />
+          <br />
           <Button onClick={handleSignOut}>Sign Out</Button>
+
+
         </div>}
 
     </div>
